@@ -1,10 +1,10 @@
 import React from "react";
 export default class App extends React.Component {
   state = {
-    counterValue: 6,
+    counterValue: 10,
   };
-  componentDidMount() { 
-   setInterval(() => {
+  componentDidMount() {
+    this.myInterval = setInterval(() => {
       this.setState((state) => {
         if (state.counterValue > 0) {
           return { counterValue: state.counterValue - 1 };
@@ -12,10 +12,22 @@ export default class App extends React.Component {
           return { counterValue: 0 };
         }
       });
-    }, 5000); // Decrease the counter value every second
+    }, 1000); // Decrease the counter value every second
   }
+  componentWillUnmount() {
+    clearInterval(this.myInterval);
+  }
+  // componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps, prevState);
+  }
+shouldComponentUpdate(){
+  if(this.state.counterValue === 0) {
+    return false; // Prevent re-rendering when counterValue is 0
+  }
+  return true; // Allow re-rendering for other cases
+}
   render() {
-    
     return <strong>Countdown={this.state.counterValue}</strong>;
   }
 }
