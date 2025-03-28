@@ -1,10 +1,17 @@
 import React from "react";
 export default class App extends React.Component {
   state = {
-    title: "Sabin El Anwar",
+    counterValue: 3,
   };
+  componentDidMount() { // This lifecycle method is called after the component is mounted
+   setInterval(() => {
+      this.setState({
+        counterValue: Math.max(0,this.state.counterValue - 1)
+      });
+    }, 1000); // Decrease the counter value every second
+  }
   render() {
-    const { title } = this.props.title;
-    return <div title={title}>Sabin El Anwar</div>;
+
+    return <strong>Countdown={this.state.counterValue}</strong>;
   }
 }
