@@ -5,8 +5,12 @@ export default class App extends React.Component {
   };
   componentDidMount() { // This lifecycle method is called after the component is mounted
    setInterval(() => {
-      this.setState({
-        counterValue: Math.max(0,this.state.counterValue - 1)
+      this.setState((state) => {
+        if (state.counterValue > 0) {
+          return { counterValue: state.counterValue - 1 };
+        } else {
+          return { counterValue: 0 };
+        }
       });
     }, 1000); // Decrease the counter value every second
   }
