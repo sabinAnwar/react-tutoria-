@@ -28,7 +28,7 @@ import React, { useState, useEffect } from "react";
 // //   return true; // Allow re-rendering for other cases
 // // }
 // //   return <strong>
-// //     {this.props.children} 
+// //     {this.props.children}
 // //     <br />
 // //     {/* <h1>Counter Value: {this.state.counterValue}</h1> */}
 // //     {/* <h1>Counter Value: {this.props.children}</h1> */}
@@ -57,13 +57,13 @@ export default function App() {
     // componentDidMount
     const ref = setInterval(() => {
       if (countdown > 0) {
-        setCountdown(countdown - 1);
+        setCountdown((counter) => counter - 1);
       }
     }, 1000);
 
     // Optional: cleanup on unmount
     return () => clearInterval(ref);
-  }, [countdown]);
+  }, []);
 
   return (
     <div>
