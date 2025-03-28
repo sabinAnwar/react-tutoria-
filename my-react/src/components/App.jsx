@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 // export default function App(){
 // //   state = {
 // //     counterValue: 10,
@@ -52,21 +52,24 @@ import React, { useState, useEffect } from "react";
 
 export default function App() {
   const [countdown, setCountdown] = useState(10);
-
+  const timeOnMinum = useCallback(() => {
+    if (countdown > 0) {
+      setCountdown(countdown - 1);
+    }
+  }, [countdown]);
   useEffect(() => {
     // componentDidMount
-    const ref = setTimeout(() => {
-      if (countdown > 0) {
-        setCountdown(countdown - 1);
-      }
-    }, 1000);
+    const ref = setTimeout(timeOnMinum, 1000);
   }, [countdown]);
 
-  return (
-    <div>
-      <h1>Countdown</h1>
-      <p>{countdown}</p>
-      <progress value={countdown} min="0" max="10" />
-    </div>
-  );
+  const markup = useMemo(() => {
+    return (
+      <div>
+        <h1>Countdown</h1>
+        <p>{countdown}</p>
+        <progress value={countdown} min="0" max="10" />
+      </div>
+    );
+  }, [countdown]);
+  return markup;
 }
