@@ -5,7 +5,9 @@ import App from "./components/App"; // Ensure the App component exists in the sp
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App title='soso'/>
+    <App>
+      <div>  this is me dear </div>
+      </App>
   </React.StrictMode>
 );
 
