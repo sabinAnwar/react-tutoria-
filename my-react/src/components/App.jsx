@@ -55,15 +55,12 @@ export default function App() {
 
   useEffect(() => {
     // componentDidMount
-    const ref = setInterval(() => {
+    const ref = setTimeout(() => {
       if (countdown > 0) {
-        setCountdown((counter) => counter - 1);
+        setCountdown(countdown - 1);
       }
     }, 1000);
-
-    // Optional: cleanup on unmount
-    return () => clearInterval(ref);
-  }, []);
+  }, [countdown]);
 
   return (
     <div>
