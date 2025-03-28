@@ -1,9 +1,9 @@
 import React from "react";
 export default class App extends React.Component {
   state = {
-    counterValue: 3,
+    counterValue: 6,
   };
-  componentDidMount() { // This lifecycle method is called after the component is mounted
+  componentDidMount() { 
    setInterval(() => {
       this.setState((state) => {
         if (state.counterValue > 0) {
@@ -12,10 +12,10 @@ export default class App extends React.Component {
           return { counterValue: 0 };
         }
       });
-    }, 1000); // Decrease the counter value every second
+    }, 5000); // Decrease the counter value every second
   }
   render() {
-
+    
     return <strong>Countdown={this.state.counterValue}</strong>;
   }
 }
