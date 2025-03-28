@@ -1,5 +1,5 @@
-import React from "react";
-export default class App extends React.Component {
+import React, { useState } from "react";
+export default function App(){
 //   state = {
 //     counterValue: 10,
 //   };
@@ -27,14 +27,25 @@ export default class App extends React.Component {
 //   }
 //   return true; // Allow re-rendering for other cases
 // }
-  render() {
-    return <strong>
-      {this.props.children} 
-      <br />
-      {/* <h1>Counter Value: {this.state.counterValue}</h1> */}
-      {/* <h1>Counter Value: {this.props.children}</h1> */}
-      <h1>Counter Value: {this.props.children}</h1>
-      {/* <h1>Counter Value: {this.state.counterValue}</h1> */}
-    </strong>;
-  }
+//   return <strong>
+//     {this.props.children} 
+//     <br />
+//     {/* <h1>Counter Value: {this.state.counterValue}</h1> */}
+//     {/* <h1>Counter Value: {this.props.children}</h1> */}
+//     <h1>Counter Value: {this.props.children}</h1>
+//     {/* <h1>Counter Value: {this.state.counterValue}</h1> */}
+//   </strong>;
+// }
+
+    const [counterState, setCounterState] = useState(0);
+
+    return (
+      <div>
+        <button onClick={() => {
+          setCounterState(counterState + 1);
+        }}>Click me</button>
+        <p>Counter: {counterState}</p>
+      </div>
+    );
+
 }
