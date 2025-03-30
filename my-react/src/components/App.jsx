@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 // export default function App(){
 // //   state = {
 // //     counterValue: 10,
@@ -51,25 +57,92 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 // }import React, { useState, useEffect } from 'react';
 
 export default function App() {
-  const [countdown, setCountdown] = useState(10);
-  const timeOnMinum = useCallback(() => {
-    if (countdown > 0) {
-      setCountdown(countdown - 1);
-    }
-  }, [countdown]);
-  useEffect(() => {
-    // componentDidMount
-    const ref = setTimeout(timeOnMinum, 1000);
-  }, [countdown]);
+  // const [countdown, setCountdown] = useState(10);
+  // const timeOnMinum = useCallback(() => {
+  //   if (countdown > 0) {
+  //     setCountdown(countdown - 1);
+  //   }
+  // }, [countdown]);
+  // useEffect(() => {
+  //   // componentDidMount
+  //   const ref = setTimeout(timeOnMinum, 1000);
+  // }, [countdown]);
 
-  const markup = useMemo(() => {
+  // const markup = useMemo(() => {
+  //   return (
+  //     <div>
+  //       <h1>Countdown</h1>
+  //       <p>{countdown}</p>
+  //       <progress value={countdown} min="0" max="10" />
+  //     </div>
+  //   );
+  // }, [countdown]);
+  // return markup;
+  const [time, setTime] = useState(0); // time in 1/10th seconds
+  const [isRunning, setIsRunning] = useState(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    if (isRunning) {
+      timerRef.current = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 100); // 100ms = 1/10th second
+    } else {
+      clearInterval(timerRef.current);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [isRunning]);
+
+  const formatTime = (time) => {
+    const hours = Math.floor(time / 36000);
+    const minutes = Math.floor((time % 36000) / 600);
+    const seconds = Math.floor((time % 600) / 10);
+    const tenths = time % 10;
     return (
-      <div>
-        <h1>Countdown</h1>
-        <p>{countdown}</p>
-        <progress value={countdown} min="0" max="10" />
-      </div>
+      `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:` +
+      `${String(seconds).padStart(2, "0")}.${tenths}`
     );
-  }, [countdown]);
-  return markup;
+  };
+
+  const handleStart = () => {
+    if (!isRunning) {
+      setIsRunning(true);
+    }
+  };
+
+  const handlePause = () => {
+    setIsRunning(false);
+  };
+
+  const handleStop = () => {
+    setIsRunning(false);
+    setTime(0);
+  };
+
+  return (
+    <div className="flex flex-col items-center p-6">
+      <h1 className="text-2xl font-bold mb-4">Stoppuhr</h1>
+      <div className="text-4xl font-mono mb-6">{formatTime(time)}</div>
+      <div className="space-x-4">
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded"
+          onClick={handleStart}
+        >
+          Start
+        </button>
+        <button
+          className="bg-yellow-400 text-white px-4 py-2 rounded"
+          onClick={handlePause}
+        >
+          Pause
+        </button>
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded"
+          onClick={handleStop}
+        >
+          Stopp
+        </button>
+      </div>
+    </div>
+  );
 }
